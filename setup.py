@@ -6,12 +6,12 @@ with open("README.md", "r") as fh:
 setuptools.setup(
 	name="binance-aio",
 	version="0.0.3",
-	author="nardew",
-	author_email="binance.aio@gmail.com",
+	author="weixingsun",
+	author_email="weixing.sun@gmail.com",
 	description="Binance asynchronous python client",
 	long_description=long_description,
 	long_description_content_type="text/markdown",
-	url="https://github.com/nardew/binance-aio",
+	url="https://github.com/weixingsun/binance-aio",
 	packages=setuptools.find_packages(),
 	classifiers=[
 		"Development Status :: 4 - Beta",
