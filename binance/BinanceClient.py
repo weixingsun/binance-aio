@@ -17,16 +17,15 @@ from binance.BinanceException import BinanceException
 LOG = logging.getLogger(__name__)
 
 class BinanceClient(object):
-	REST_API_URI = "https://api.binance.com/api/v3/"
+	
 
-	def __init__(self, certificate_path : str = None, api_key : str = None, sec_key : str = None,
-	             api_trace_log : bool = False) -> None:
+	def __init__(self, rest_uri = "https://api.binance.com/api/v3/", certificate_path : str = None, 
+		     api_key : str = None, sec_key : str = None, api_trace_log : bool = False) -> None:
 		self.api_key = api_key
 		self.sec_key = sec_key
 		self.api_trace_log = api_trace_log
-
+		self.REST_API_URI = rest_uri
 		self.rest_session = None
-
 		self.ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 		self.ssl_context.load_verify_locations(certificate_path)
 
@@ -380,13 +379,13 @@ class BinanceClient(object):
 				params['signature'] = self._get_signature(params, data)
 
 			if rest_call_type == enums.RestCallType.GET:
-				rest_call = self._get_rest_session().get(BinanceClient.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
+				rest_call = self._get_rest_session().get(self.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
 			elif rest_call_type == enums.RestCallType.POST:
-				rest_call = self._get_rest_session().post(BinanceClient.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
+				rest_call = self._get_rest_session().post(self.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
 			elif rest_call_type == enums.RestCallType.DELETE:
-				rest_call = self._get_rest_session().delete(BinanceClient.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
+				rest_call = self._get_rest_session().delete(self.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
 			elif rest_call_type == enums.RestCallType.PUT:
-				rest_call = self._get_rest_session().put(BinanceClient.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
+				rest_call = self._get_rest_session().put(self.REST_API_URI + resource, json = data, params = params, headers = headers, ssl = self.ssl_context)
 			else:
 				raise Exception(f"Unsupported REST call type {rest_call_type}.")
 
